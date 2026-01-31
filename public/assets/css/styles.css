@@ -1,19 +1,28 @@
 /* Global Variables & Fonts */
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,300');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Rambla:400,700');
 @import url('https://fonts.googleapis.com/css?family=Calligraffitti');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
 :root {
-    --primary: #00838F;
-    /* Cyan Dark - kept from update as it matches original intent */
-    --secondary: #F57C00;
-    /* Amber/Orange */
-    --light: #f8f9fa;
-    --dark: #212529;
+    /* Brand Colors - Extracted from New Logo (Cyan/Teal/Neon) */
+    --primary: #00E5FF;
+    /* Bright Cyan */
+    --primary-dark: #00B8D4;
+    --secondary: #1de9b6;
+    /* Teal Accent */
+    --accent: #651FFF;
+    /* Deep Purple for contrast */
 
-    /* Strict Font Mapping from Original */
+    /* Neutral Colors */
+    --light: #f8f9fa;
+    --dark: #1a1a2e;
+    /* Deep blue-black bg */
+    --dark-card: #16213e;
+    --text-muted: #8b9bb4;
+
+    /* Fonts */
     --font-primary: 'Open Sans', sans-serif;
     --font-headers: 'Rambla', sans-serif;
     --font-logo: 'Roboto', sans-serif;
@@ -22,8 +31,9 @@
 
 body {
     font-family: var(--font-primary);
-    color: #666;
-    /* Specific grey from original */
+    color: #4a5568;
+    background-color: #fff;
+    overflow-x: hidden;
 }
 
 h1,
@@ -33,141 +43,237 @@ h4,
 h5,
 h6 {
     font-family: var(--font-headers);
+    color: var(--dark);
+    font-weight: 700;
 }
 
 a {
-    transition: all 0.3s;
-    text-decoration: none;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
 }
 
-/* Navbar */
+/* Navbar Modernization */
 #mainNav {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-    background-color: #fff;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 #mainNav .navbar-brand {
     font-family: var(--font-logo);
     font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.5px;
 }
 
 #mainNav .nav-link {
     font-family: var(--font-headers);
-    font-weight: 400;
+    font-weight: 600;
     font-size: 0.95rem;
-    color: #444;
+    color: #555;
+    position: relative;
+    margin: 0 0.5rem;
+}
+
+#mainNav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: width 0.3s;
+}
+
+#mainNav .nav-link:hover::after,
+#mainNav .nav-link.active::after {
+    width: 100%;
 }
 
 #mainNav .nav-link:hover,
 #mainNav .nav-link.active {
-    color: var(--primary);
+    color: var(--primary-dark);
 }
 
 /* Hero Section */
 header.masthead {
     padding-top: 10rem;
     padding-bottom: calc(10rem - 4.5rem);
-    background: linear-gradient(to bottom, rgba(0, 131, 143, 0.6) 0%, rgba(33, 37, 41, 0.7) 100%), url("../img/backgrounds/hero-bg.jpg");
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.85) 0%, rgba(22, 33, 62, 0.9) 100%), url("../img/backgrounds/hero-bg.jpg");
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: scroll;
+    background-attachment: fixed;
     background-size: cover;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
-@media (min-width: 768px) {
-    header.masthead {
-        background-attachment: fixed;
-    }
+header.masthead h1 {
+    font-size: 3.5rem;
+    background: -webkit-linear-gradient(0deg, #fff, #b2ebf2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.title-white {
-    color: #fff;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+.title-badge {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    color: var(--secondary);
+    font-weight: 300;
+    letter-spacing: 1px;
 }
 
 /* Dividers */
 hr.divider {
-    max-width: 3.25rem;
-    border-width: 0.2rem;
-    border-color: var(--secondary);
+    max-width: 4rem;
+    border-width: 0.3rem;
+    border-color: var(--primary);
+    border-radius: 10px;
     opacity: 1;
-    margin: 1.5rem auto;
-}
-
-hr.hr-light {
-    border-color: #fff;
+    margin: 2rem auto;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border: none;
+    height: 4px;
 }
 
 .page-section {
-    padding: 5rem 0;
+    padding: 6rem 0;
 }
 
-/* Sections */
-.bg-dark {
-    background-color: #2e343a !important;
-}
-
-.text-justify {
-    text-align: justify;
-}
-
-.text-letter-spacing {
-    letter-spacing: 2px;
-}
-
-/* Cards & Interactables */
+/* Cards & Modern UI Elements */
 .card {
     border: none;
-    border-radius: 4px;
-    /* Slightly squarer like original */
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.card .card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .transition-hover {
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .transition-hover:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+    transform: translateY(-8px);
 }
 
 /* Buttons */
 .btn-primary {
-    background-color: var(--primary);
-    border-color: var(--primary);
+    background: linear-gradient(45deg, var(--primary-dark), var(--secondary));
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
 }
 
 .btn-primary:hover {
-    background-color: #006064;
-    border-color: #006064;
+    background: linear-gradient(45deg, var(--secondary), var(--primary-dark));
+    box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
+    transform: translateY(-2px);
 }
 
-/* Footer */
-footer a {
-    color: rgba(255, 255, 255, 0.7);
+.btn-warning {
+    background: linear-gradient(45deg, #FF6F00, #FFCA28);
+    border: none;
+    color: white !important;
 }
 
-footer a:hover {
-    color: #fff;
-    text-decoration: underline;
+.btn-xl {
+    padding: 1.25rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Utility Defaults */
-.opacity-75 {
-    opacity: 0.75;
+/* Features Icons */
+.la,
+.fa-mobile-phone,
+.fa-wrench,
+.fa-rocket,
+.fa-clock-o,
+.fa-users,
+.fa-picture-o {
+    background: -webkit-linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 5px 15px rgba(0, 229, 255, 0.2));
+    transition: transform 0.3s;
 }
 
-.opacity-50 {
-    opacity: 0.50;
+.col-lg-4:hover .la {
+    transform: scale(1.1) rotate(5deg);
 }
 
-.w-10 {
-    width: 10%;
+/* Pricing Cards */
+.pricing-card {
+    transition: all 0.3s;
 }
 
-.w-20 {
-    width: 20%;
+.pricing-card.best-value {
+    transform: scale(1.05);
+    border: 2px solid var(--primary);
+    z-index: 2;
+    box-shadow: 0 15px 40px rgba(0, 229, 255, 0.15);
+}
+
+/* Footer & Dark Sections */
+.bg-dark {
+    background: linear-gradient(to right, #1a1a2e, #16213e) !important;
+}
+
+.text-white-50 {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Utilities */
+.text-justify {
+    text-align: justify;
+}
+
+.ratio iframe {
+    border-radius: 12px;
+}
+
+/* Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.floating-element {
+    animation: float 4s ease-in-out infinite;
 }
