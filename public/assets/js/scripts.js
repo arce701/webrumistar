@@ -116,6 +116,7 @@ function initCounters() {
 
     const animateCounter = function(counter) {
         const target = parseInt(counter.getAttribute('data-count'));
+        const prefix = counter.getAttribute('data-prefix') || '';
         const duration = 2000; // 2 segundos
         const increment = target / (duration / 16); // 60 FPS
         let current = 0;
@@ -123,10 +124,10 @@ function initCounters() {
         const updateCounter = function() {
             current += increment;
             if (current < target) {
-                counter.textContent = Math.floor(current);
+                counter.textContent = prefix + Math.floor(current);
                 requestAnimationFrame(updateCounter);
             } else {
-                counter.textContent = target;
+                counter.textContent = prefix + target;
             }
         };
 
@@ -136,14 +137,20 @@ function initCounters() {
     // Intersection Observer para animar cuando sea visible
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
-            if (entry.isIntersecting && entry.target.textContent === '0') {
-                animateCounter(entry.target);
+            if (entry.isIntersecting) {
+                const prefix = entry.target.getAttribute('data-prefix') || '';
+                const initialText = prefix + '0';
+                // Solo animar si no ha sido animado antes
+                if (entry.target.textContent === initialText) {
+                    animateCounter(entry.target);
+                }
             }
         });
     }, { threshold: 0.5 });
 
     counters.forEach(function(counter) {
-        counter.textContent = '0'; // Inicializar en 0
+        const prefix = counter.getAttribute('data-prefix') || '';
+        counter.textContent = prefix + '0'; // Inicializar en +0
         observer.observe(counter);
     });
 }
